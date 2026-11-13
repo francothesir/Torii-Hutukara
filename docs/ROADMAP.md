@@ -1,3 +1,5 @@
+> **Atualização 13/11/2026:** candidata Alpha 1.3.0 entregue no fork. Consulte [escopo e verificações](POLISH_1_3_0.md). O conteúdo anterior abaixo permanece como histórico; não é confirmação de Beta ou de playtest integral.
+
 # Roadmap
 
 ## Agora — estabilizar a Alpha 1.1.x

@@ -7,6 +7,8 @@ on:
       - 'web/playtest/**'
       - 'production/build_playtest.rb'
       - 'game/builds/**'
+      - 'game/source/**'
+      - 'qa/polish/**'
       - '.github/workflows/playtest.yml'
   workflow_dispatch:
 
@@ -27,12 +29,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and validate candidate
+        run: |
+          ruby game/source/chapter-03/build_alpha.rb
+          ruby game/source/chapter-03/validate_alpha.rb
+          node qa/polish/run.cjs
       - name: Export verified playable build
         run: ruby production/build_playtest.rb
+      - name: Store portable candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: torii-hutukara-alpha-1.3.0-portable
+          path: game/builds/alpha-1.3.0/
+      - uses: actions/configure-pages@v5
+        id: pages
+        continue-on-error: true
       - uses: actions/upload-pages-artifact@v4
+        if: steps.pages.outcome == 'success'
         with:
           path: production/playtest-dist
       - name: Publish
+        if: steps.pages.outcome == 'success'
         id: deployment
         uses: actions/deploy-pages@v4

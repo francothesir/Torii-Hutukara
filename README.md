@@ -1,3 +1,5 @@
+> **Atualização 13/11/2026:** candidata Alpha 1.3.0 entregue no fork. Consulte [escopo e verificações](docs/POLISH_1_3_0.md). O conteúdo anterior abaixo permanece como histórico; não é confirmação de Beta ou de playtest integral.
+
 # TORII & HUTUKARA — A Última Frequência
 
 RPG musical de ação e narrativa feito em HTML Canvas. A jornada acompanha Franco, Ryuchi e suas outras frequências através de três capítulos conectados por música, memória, criação e medo de começar.

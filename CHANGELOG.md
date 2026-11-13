@@ -2,6 +2,15 @@
 
 Todas as alterações relevantes do projeto são registradas aqui.
 
+## [Alpha 1.3.0 · Candidata de acabamento] — 2026-11-13
+
+- Saves de teste separados, backup e preview consistente.
+- Kits compartilhados entre P1/P2, UI mobile por dispositivo e preferências de leitura/controles.
+- Pisos, nuvens e Contratempo integrados; reunião da flauta reduz retorno vazio.
+- Base64 protegido durante renomeação: todas as trilhas originais preservadas.
+- Regressões e validação antes da exportação web.
+- Escopo, evidência e pendências: [relatório 1.3.0](docs/POLISH_1_3_0.md). Jornada integral e aparelhos físicos ainda pendentes.
+
 ## [Não lançado]
 
 ### Planejado

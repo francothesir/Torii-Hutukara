@@ -12,8 +12,9 @@ REPO_ROOT = File.expand_path('../../..', ROOT)
 BASE = File.join(REPO_ROOT, 'game', 'source', 'base', 'TORII_HUTUKARA_1_1_2_TRILHAS.html')
 RUNTIME = File.join(ROOT, 'chapter3_runtime.js')
 INPUT_RUNTIME = File.join(ROOT, 'input_mobile_combat.js')
-OUTPUT_DIR = File.join(REPO_ROOT, 'game', 'builds', 'alpha-1.2.4')
-OUTPUT = File.join(OUTPUT_DIR, 'TORII_HUTUKARA_ALPHA_1_2_4_MOBILE_COOP.html')
+POLISH_FILES = %w[save_polish.js combat_polish.js world_polish.js ui_polish.js].map { |name| File.join(ROOT, name) }
+OUTPUT_DIR = File.join(REPO_ROOT, 'game', 'builds', 'alpha-1.3.0')
+OUTPUT = File.join(OUTPUT_DIR, 'TORII_HUTUKARA_ALPHA_1_3_0_MOBILE_COOP.html')
 
 ASSETS = File.join(REPO_ROOT, 'assets', 'chapter-03')
 RUNTIME_ASSETS = File.join(ASSETS, 'runtime')
@@ -79,6 +80,12 @@ raise "Runtime ausente: #{RUNTIME}" unless File.file?(RUNTIME)
 raise "Diálogos ausentes: #{DIALOGUES}" unless File.file?(DIALOGUES)
 
 html = File.binread(BASE).force_encoding(Encoding::UTF_8)
+# Public-name changes must never rewrite coincidental words inside Base64 media.
+protected_media = []
+html.gsub!(/[A-Za-z0-9+\/]{1024,}={0,2}/) do |encoded|
+  protected_media << encoded
+  "__PRESERVED_MEDIA_#{protected_media.length - 1}__"
+end
 runtime = File.read(RUNTIME, encoding: 'UTF-8')
 
 html.sub!('<title>TORII & HUTUKARA — A Última Frequência · 1.1.2 · Pré-alpha</title>',
@@ -196,20 +203,22 @@ raise "Placeholders restantes: #{leftovers.join(', ')}" unless leftovers.empty?
 marker = "\ninit();\n</script>"
 position = html.rindex(marker)
 raise 'Ponto final de injeção não encontrado' unless position
-html.insert(position, "\n\n#{runtime}\n\n#{File.read(INPUT_RUNTIME, encoding: 'UTF-8')}\n")
-html.gsub!('ALPHA 1.2.0', 'ALPHA 1.2.4')
-html.gsub!('Alpha 1.2.0', 'Alpha 1.2.4')
+html.insert(position, "\n\n#{runtime}\n\n#{File.read(INPUT_RUNTIME, encoding: 'UTF-8')}\n#{POLISH_FILES.map { |path| File.read(path, encoding: 'UTF-8') }.join("\n")}\n")
+html.sub!("if(safeLoad()&&!confirm('Iniciar diretamente no Capítulo 02? Isso substitui o salvamento automático atual. Exporte-o antes se quiser conservar a jornada.'))return;", '')
+html.gsub!('ALPHA 1.2.0', 'ALPHA 1.3.0')
+html.gsub!('Alpha 1.2.0', 'Alpha 1.3.0')
 
 html.gsub!('clamp(G.x*T-VW/2,0,a.w*T-VW)', 'clamp(coopCamera123("x")*T-VW/2,0,a.w*T-VW)')
 html.gsub!('clamp(G.y*T-VH/2,0,a.h*T-VH)', 'clamp(coopCamera123("y")*T-VH/2,0,a.h*T-VH)')
 html.gsub!("yy=bossActor?.id==='voice_boss'?", "yy=!C3.coopActive()&&bossActor?.id==='voice_boss'?")
 FileUtils.mkdir_p(OUTPUT_DIR)
+html.gsub!(/__PRESERVED_MEDIA_(\d+)__/) { protected_media.fetch(Regexp.last_match(1).to_i) }
 File.binwrite(OUTPUT, html)
 
-sources = FILES.values + [BASE, RUNTIME, INPUT_RUNTIME, DIALOGUES]
+sources = FILES.values + [BASE, RUNTIME, INPUT_RUNTIME, DIALOGUES] + POLISH_FILES
 manifest = {
   game: 'TORII & HUTUKARA',
-  build: 'ALPHA 1.2.4 · MOBILE & CO-OP',
+  build: 'ALPHA 1.3.0 · MOBILE & CO-OP',
   schema: 13,
   created_at: Time.now.iso8601,
   output: {
@@ -242,11 +251,11 @@ manifest = {
   end
 }
 
-manifest_path = File.join(OUTPUT_DIR, 'MANIFESTO_ALPHA_1_2_4.json')
+manifest_path = File.join(OUTPUT_DIR, 'MANIFESTO_ALPHA_1_3_0.json')
 File.write(manifest_path, JSON.pretty_generate(manifest) + "\n")
-File.write(File.join(OUTPUT_DIR, 'SHA256_ALPHA_1_2_4.txt'), "#{manifest[:output][:sha256]}  #{File.basename(OUTPUT)}\n")
-File.write(File.join(OUTPUT_DIR, 'LEIA-ME_ALPHA_1_2_4.txt'), <<~README)
-  TORII & HUTUKARA — ALPHA 1.2.4 · MOBILE & CO-OP
+File.write(File.join(OUTPUT_DIR, 'SHA256_ALPHA_1_3_0.txt'), "#{manifest[:output][:sha256]}  #{File.basename(OUTPUT)}\n")
+File.write(File.join(OUTPUT_DIR, 'LEIA-ME_ALPHA_1_3_0.txt'), <<~README)
+  TORII & HUTUKARA — ALPHA 1.3.0 · MOBILE & CO-OP
   =================================
 
   Build jogável completa, do Capítulo 01 ao Capítulo 03.
