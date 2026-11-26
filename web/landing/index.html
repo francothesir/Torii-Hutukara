@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Torii &amp; Hutukara, o álbum e o RPG musical.">
+<title>Torii &amp; Hutukara</title>
+<link rel="preload" as="font" type="font/woff2" href="fonts/geist-latin.woff2" crossorigin>
+<link rel="preload" as="image" href="frames/opening.webp" media="(prefers-reduced-motion: no-preference)">
+<link rel="stylesheet" href="site.css?v=title-spacing">
+<script src="site.js?v=title" defer></script>
+<noscript><style>[data-open-game] { display: none; }</style></noscript>
+</head>
+<body id="home">
+<div class="opening" data-opening hidden>
+  <div class="opening-frames">
+    <img src="frames/opening-poster.webp" width="256" height="256" alt="" data-intro-image>
+    <canvas width="256" height="256" aria-hidden="true" data-intro-sequence hidden></canvas>
+  </div>
+  <button type="button" class="skip" data-skip>Pular intro <span aria-hidden="true">↗</span></button>
+</div>
+
+<header class="site-header">
+  <a class="wordmark" href="#home" aria-label="Torii e Hutukara, início">T<span>&amp;</span>H</a>
+  <nav aria-label="Seções">
+    <a href="#release">Release</a>
+    <a href="#ouvir">Ouvir</a>
+    <a href="#jogo">Jogar</a>
+  </nav>
+</header>
+
+<main>
+  <section class="journey" data-journey aria-labelledby="title">
+    <div class="stage" data-stage>
+      <div class="frames">
+        <img src="frames/pullback-poster.webp" width="448" height="448" alt="Máscara Torii com tecido de linho, costura aparente e óculos de lentes redondas" fetchpriority="high" data-poster>
+        <canvas width="448" height="448" aria-hidden="true" data-sequence hidden></canvas>
+      </div>
+      <div class="stage-title" data-stage-title>
+        <h1 id="title">
+          <span class="visually-hidden">Torii &amp; Hutukara</span>
+          <svg class="title-art" width="100%" height="100%" aria-hidden="true">
+            <svg x="7%" width="86%" height="64%" viewBox="0 0 1000 76" preserveAspectRatio="none" overflow="hidden">
+              <text x="4" y="74" font-size="100" textLength="992" lengthAdjust="spacingAndGlyphs">TORII</text>
+            </svg>
+            <svg y="65%" width="100%" height="35%" viewBox="0 0 1000 76" preserveAspectRatio="none" overflow="hidden">
+              <text x="4" y="74" font-size="100" textLength="992" lengthAdjust="spacingAndGlyphs">&amp; HUTUKARA</text>
+            </svg>
+          </svg>
+        </h1>
+        <div class="frames title-cutout" aria-hidden="true">
+          <img src="frames/cutout-poster.webp" width="448" height="448" alt="" fetchpriority="high">
+          <canvas width="448" height="448" data-cutout hidden></canvas>
+        </div>
+      </div>
+      <div class="progress" data-progress aria-hidden="true"></div>
+    </div>
+
+    <div class="journey-content">
+      <div class="frame-track" data-frame-track>
+        <div class="hero">
+          <a href="#travessia" class="journey-link">Travessia <span aria-hidden="true">↓</span></a>
+        </div>
+        <div id="travessia"></div>
+      </div>
+
+      <div class="album" data-focus-shift>
+        <section id="release" class="release" aria-label="Release do álbum">
+          <p data-reveal><strong>Torii &amp; Hutukara</strong> é um álbum sobre viajar entre universos.</p>
+          <p data-reveal><strong>Torii</strong> é o nome japonês do portal que marca a entrada dos santuários xintoístas. Na cosmologia yanomami, <strong>Hutukara</strong> dá nome ao antigo céu que caiu e deu origem à terra-floresta.</p>
+          <p data-reveal>No universo do álbum, vestir a máscara abre a passagem para outras realidades de Hutukara.</p>
+        </section>
+
+        <section id="ouvir" class="listen" aria-label="Plataformas digitais">
+          <a data-reveal href="https://open.spotify.com/album/1JuDssMKqT8rmX82ElPFdb?si=835189cbf2d14763" target="_blank" rel="noopener" aria-label="Ouvir Torii e Hutukara no Spotify"><img alt="" src="spotify.svg" width="34" height="34"></a>
+          <a data-reveal data-reveal-delay=".07" href="https://music.youtube.com/search?q=Torii%20%26%20Hutukara" target="_blank" rel="noopener" aria-label="Buscar Torii e Hutukara no YouTube Music"><img alt="" src="youtubemusic.svg" width="34" height="34"></a>
+          <a data-reveal data-reveal-delay=".14" href="https://music.apple.com/br/search?term=Torii%20%26%20Hutukara" target="_blank" rel="noopener" aria-label="Buscar Torii e Hutukara no Apple Music"><img alt="" src="applemusic.svg" width="34" height="34"></a>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section id="jogo" class="play" aria-label="Jogo">
+    <button class="play-button" type="button" data-open-game aria-haspopup="dialog" aria-controls="game-dialog">Jogue Torii e Hutukara <span aria-hidden="true">↗</span></button>
+    <noscript><a class="play-button" href="https://ryusarto.github.io/Torii-Hutukara/">Jogue Torii e Hutukara <span aria-hidden="true">↗</span></a></noscript>
+  </section>
+</main>
+
+<dialog id="game-dialog" class="game-dialog" data-game-dialog aria-labelledby="game-title">
+  <div class="game" data-game>
+    <div class="game-toolbar">
+      <h2 id="game-title">Torii &amp; Hutukara</h2>
+      <div class="game-actions">
+        <a class="game-external" href="https://ryusarto.github.io/Torii-Hutukara/" target="_blank" rel="noopener" aria-label="Abrir jogo em nova aba">↗</a>
+        <button type="button" data-fullscreen hidden><span data-fullscreen-label>Tela cheia</span></button>
+        <button type="button" data-close-game autofocus>Fechar <span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+    <iframe title="Jogo Torii e Hutukara" data-game-frame data-src="https://ryusarto.github.io/Torii-Hutukara/" allow="fullscreen; gamepad; autoplay" allowfullscreen></iframe>
+  </div>
+</dialog>
+
+<footer class="site-footer"><a href="#home" aria-label="Voltar ao início">↑</a></footer>
+</body>
+</html>
